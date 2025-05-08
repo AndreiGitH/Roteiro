@@ -1,7 +1,7 @@
 import streamlit as st
 from google import genai
 
-# App Streamlit para gerar roteiros de vídeos no YouTube usando Gemini 2.5 Pro Preview 05-06
+# App Streamlit para gerar roteiros de vídeos no YouTube usando Google Gemini
 
 def main():
     st.set_page_config(page_title="Roteiro YouTube AI", layout="wide")
@@ -10,6 +10,10 @@ def main():
     # Configurar cliente Google GenAI
     api_key = st.secrets.get("google_api_key", "")
     client = genai.Client(api_key=api_key)
+
+    # Input para escolher modelo
+    default_model = st.secrets.get("default_model", "gemini-2.5-pro-exp-03-25")
+    model_name = st.text_input("Modelo GenAI:", value=default_model)
 
     # Caixa de texto para roteiro original
     original = st.text_area(
@@ -24,7 +28,7 @@ def main():
             st.error("Por favor, cole o roteiro original antes de analisar.")
         else:
             with st.spinner("Analisando roteiro..."):
-                analysis = analyze_script(client, original)
+                analysis = analyze_script(client, model_name, original)
                 st.session_state.analysis = analysis
                 st.text_area(
                     "Análise de gancho, retenção, engajamento e storytelling:",
@@ -37,7 +41,7 @@ def main():
     if st.session_state.get("analysis"):
         if st.button("Gerar novo roteiro", key="btn_generate_script"):
             with st.spinner("Gerando novo roteiro..."):
-                new_script = generate_script(client, original, st.session_state.analysis)
+                new_script = generate_script(client, model_name, original, st.session_state.analysis)
                 st.session_state.new_script = new_script
                 st.text_area(
                     "Roteiro reescrito (aprox. 25 min):",
@@ -56,7 +60,7 @@ def main():
     if st.session_state.get("new_script"):
         if st.button("Gerar títulos e descrição", key="btn_titles"):
             with st.spinner("Gerando títulos e descrição..."):
-                titles_desc = generate_titles_and_description(client, st.session_state.new_script)
+                titles_desc = generate_titles_and_description(client, model_name, st.session_state.new_script)
                 st.session_state.titles_desc = titles_desc
                 st.text_area(
                     "Sugestões de títulos e descrição de vídeo:",
@@ -81,15 +85,15 @@ def call_genai(client, model: str, prompt: str) -> str:
     return response.text.strip()
 
 
-def analyze_script(client, script: str) -> str:
+def analyze_script(client, model: str, script: str) -> str:
     prompt = (
         "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling.\n"
         + script
     )
-    return call_genai(client, "gemini-2.5-pro-exp-03-25", prompt)
+    return call_genai(client, model, prompt)
 
 
-def generate_script(client, original: str, analysis: str) -> str:
+def generate_script(client, model: str, original: str, analysis: str) -> str:
     prompt = (
         "Você é um roteirista de vídeos de youtube, especialista em retenção e storytelling. "
         "Reescreva o texto, pronto para a narração via tts, sem [] ou divisões, ou marcações, aproximadamente 25 minutos, "
@@ -101,10 +105,10 @@ def generate_script(client, original: str, analysis: str) -> str:
         "Roteiro original:\n" + original + "\n\n"
         "Análise:\n" + analysis
     )
-    return call_genai(client, "gemini-2.5-pro-exp-03-25", prompt)
+    return call_genai(client, model, prompt)
 
 
-def generate_titles_and_description(client, script: str) -> str:
+def generate_titles_and_description(client, model: str, script: str) -> str:
     prompt = (
         "Crie sugestões de título para vídeo de youtube com no máximo 60 caracteres. "
         "Os títulos devem despertar curiosidade, benefício e urgência e atender às melhores práticas de títulos chamativos e bem sucedidos de youtube, "
@@ -112,7 +116,7 @@ def generate_titles_and_description(client, script: str) -> str:
         "Ao final traga a descrição do vídeo de youtube com 1000 caracteres, hashtags e tags entre vírgulas, atentando para SEO.\n\n"
         + script
     )
-    return call_genai(client, "gemini-2.5-pro-exp-03-25", prompt)
+    return call_genai(client, model, prompt)
 
 
 if __name__ == "__main__":
