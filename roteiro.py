@@ -42,7 +42,7 @@ def main():
             st.session_state.analysis,
             height=300,
             key="analysis_box",
-            disabled=True
+            disabled=False
         )
 
     # Gerar Novo Roteiro
