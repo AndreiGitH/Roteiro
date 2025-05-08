@@ -135,8 +135,8 @@ def generate_titles_and_description(client, model: str, script: str) -> str:
         "Crie sugestões de título para vídeo de youtube com no máximo 60 caracteres. "
         "Os títulos devem despertar curiosidade, benefício e urgência e atender às melhores práticas de títulos chamativos e bem sucedidos de youtube, "
         "a fim de aumentar os cliques sem se afastar do conteúdo do vídeo. "
-        "Ao final traga a descrição do vídeo de youtube com 1000 caracteres, hashtags e tags entre vírgulas, atentando para SEO."
-        "Traga  também sugestão de prompt em português e em inglês para a criação de imagem da thumb, "
+        "Ao final traga a descrição do vídeo de youtube com 1000 caracteres, hashtags e tags entre vírgulas, atentando para SEO, "
+        "e sugestão de prompt em português e em inglês para a criação de imagem da thumb, "
         "considerando 3 elementos visuais principais na thumb, rosto visível com expressão forte, com visual chamativo e que desperte a curiosidade, sem texto overlay.\n\n"
         + script
     )
