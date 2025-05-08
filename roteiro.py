@@ -86,7 +86,7 @@ def analyze_script(client, script: str) -> str:
         "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling.\n"
         + script
     )
-    return call_genai(client, "gemini-2.5-pro-preview-05-06", prompt)
+    return call_genai(client, "gemini-2.5-pro-exp-03-25", prompt)
 
 
 def generate_script(client, original: str, analysis: str) -> str:
@@ -101,7 +101,7 @@ def generate_script(client, original: str, analysis: str) -> str:
         "Roteiro original:\n" + original + "\n\n"
         "Análise:\n" + analysis
     )
-    return call_genai(client, "gemini-2.5-pro-preview-05-06", prompt)
+    return call_genai(client, "gemini-2.5-pro-exp-03-25", prompt)
 
 
 def generate_titles_and_description(client, script: str) -> str:
@@ -112,7 +112,7 @@ def generate_titles_and_description(client, script: str) -> str:
         "Ao final traga a descrição do vídeo de youtube com 1000 caracteres, hashtags e tags entre vírgulas, atentando para SEO.\n\n"
         + script
     )
-    return call_genai(client, "gemini-2.5-pro-preview-05-06", prompt)
+    return call_genai(client, "gemini-2.5-pro-exp-03-25", prompt)
 
 
 if __name__ == "__main__":
