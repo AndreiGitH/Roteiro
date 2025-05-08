@@ -101,7 +101,7 @@ def call_genai(client, model: str, prompt: str) -> str:
 
 def analyze_script(client, model: str, script: str) -> str:
     prompt = (
-        "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling.\n"
+        "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling. Traga oportunidades de melhoria.\n"
         + script
     )
     return call_genai(client, model, prompt)
@@ -110,8 +110,9 @@ def analyze_script(client, model: str, script: str) -> str:
 def generate_script(client, model: str, original: str, analysis: str) -> str:
     prompt = (
         "Você é um roteirista de vídeos de youtube, especialista em retenção e storytelling. "
-        "Reescreva o texto, pronto para a narração via tts, sem [] ou divisões, ou marcações, aproximadamente 25 minutos, "
-        "(3250 palavras), de tal forma que não incorra em plágio, contendo trechos bíblicos, e uns 3 ditados populares. "
+        "Reescreva o texto, de tal forma que não incorra em plágio ou conteúdo reutilizável, pronto para a narração via tts, " 
+        "sem [] ou divisões, ou marcações, aproximadamente 25 minutos, "
+        "(3250 palavras), contendo trechos bíblicos, e uns 3 ditados populares. "
         "Use linguagem próxima do público (não use expressão como galera, palavras difíceis ou em inglês). "
         "Abra ganchos narrativos. Não seja prolixo. Atenção: o gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras.\n"
         "Mantenha os pontos fortes e faça as melhorias sugeridas de acordo com o texto e análise a seguir. "
