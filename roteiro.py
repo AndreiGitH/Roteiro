@@ -95,9 +95,9 @@ def generate_script(client, original: str, analysis: str) -> str:
         "Reescreva o texto, pronto para a narração via tts, sem [] ou divisões, ou marcações, aproximadamente 25 minutos, "
         "(3250 palavras), de tal forma que não incorra em plágio, contendo trechos bíblicos, e uns 3 ditados populares. "
         "Use linguagem próxima do público (não use expressão como galera, palavras difíceis ou em inglês). "
-        "Abra ganchos narrativos. Não seja prolixo. O gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras.\n"
+        "Abra ganchos narrativos. Não seja prolixo. Atenção: o gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras.\n"
         "Mantenha os pontos fortes e faça as melhorias sugeridas de acordo com o texto e análise a seguir. "
-        "Ao final dê uma nota de comparação entre os dois textos para configuração de conteúdo reutilizável.\n\n"
+        "Ao final dê uma nota de comparação entre os dois textos quanto a configuração de conteúdo reutilizável ou plágio.\n\n"
         "Roteiro original:\n" + original + "\n\n"
         "Análise:\n" + analysis
     )
