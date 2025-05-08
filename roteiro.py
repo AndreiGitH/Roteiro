@@ -27,67 +27,74 @@ def main():
         key="original"
     )
 
-    # Botão para análise
+    # Analisar Roteiro
     if st.button("Analisar roteiro", key="btn_analyze"):
         if not original.strip():
             st.error("Por favor, cole o roteiro original antes de analisar.")
         else:
             with st.spinner("Analisando roteiro..."):
-                analysis = analyze_script(client, model_name, original)
-                st.session_state.analysis = analysis
-                st.text_area(
-                    "Análise de gancho, retenção, engajamento e storytelling:",
-                    analysis,
-                    height=300,
-                    key="analysis_box"
-                )
+                st.session_state.analysis = analyze_script(client, model_name, original)
 
-    # Botão para gerar novo roteiro
+    # Exibir Análise se existir
     if st.session_state.get("analysis"):
-        if st.button("Gerar novo roteiro", key="btn_generate_script"):
-            with st.spinner("Gerando novo roteiro..."):
-                new_script = generate_script(
-                    client,
-                    model_name,
-                    original,
-                    st.session_state.analysis
-                )
-                st.session_state.new_script = new_script
-                st.text_area(
-                    "Roteiro reescrito (aprox. 25 min):",
-                    new_script,
-                    height=400,
-                    key="script_box"
-                )
-                st.download_button(
-                    label="Baixar roteiro (.txt)",
-                    data=new_script,
-                    file_name="roteiro_reescrito.txt",
-                    mime="text/plain"
-                )
+        st.text_area(
+            "Análise de gancho, retenção, engajamento e storytelling:",
+            st.session_state.analysis,
+            height=300,
+            key="analysis_box",
+            disabled=True
+        )
 
-    # Botão para gerar títulos e descrição
+    # Gerar Novo Roteiro
+    if st.session_state.get("analysis") and st.button("Gerar novo roteiro", key="btn_generate_script"):
+        with st.spinner("Gerando novo roteiro..."):
+            st.session_state.new_script = generate_script(
+                client,
+                model_name,
+                original,
+                st.session_state.analysis
+            )
+
+    # Exibir Novo Roteiro se existir
     if st.session_state.get("new_script"):
-        if st.button("Gerar títulos e descrição", key="btn_titles"):
-            with st.spinner("Gerando títulos e descrição..."):
-                titles_desc = generate_titles_and_description(
-                    client,
-                    model_name,
-                    st.session_state.new_script
-                )
-                st.session_state.titles_desc = titles_desc
-                st.text_area(
-                    "Sugestões de títulos e descrição de vídeo:",
-                    titles_desc,
-                    height=300,
-                    key="titles_box"
-                )
-                st.download_button(
-                    label="Baixar títulos e descrição (.txt)",
-                    data=titles_desc,
-                    file_name="titulos_descricao.txt",
-                    mime="text/plain"
-                )
+        st.text_area(
+            "Roteiro reescrito (aprox. 25 min):",
+            st.session_state.new_script,
+            height=400,
+            key="script_box",
+            disabled=True
+        )
+        st.download_button(
+            label="Baixar roteiro (.txt)",
+            data=st.session_state.new_script,
+            file_name="roteiro_reescrito.txt",
+            mime="text/plain"
+        )
+
+    # Gerar Títulos e Descrição
+    if st.session_state.get("new_script") and st.button("Gerar títulos e descrição", key="btn_titles"):
+        with st.spinner("Gerando títulos e descrição..."):
+            st.session_state.titles_desc = generate_titles_and_description(
+                client,
+                model_name,
+                st.session_state.new_script
+            )
+
+    # Exibir Títulos e Descrição se existir
+    if st.session_state.get("titles_desc"):
+        st.text_area(
+            "Sugestões de títulos e descrição de vídeo:",
+            st.session_state.titles_desc,
+            height=300,
+            key="titles_box",
+            disabled=True
+        )
+        st.download_button(
+            label="Baixar títulos e descrição (.txt)",
+            data=st.session_state.titles_desc,
+            file_name="titulos_descricao.txt",
+            mime="text/plain"
+        )
 
 
 def call_genai(client, model: str, prompt: str) -> str:
@@ -101,7 +108,7 @@ def call_genai(client, model: str, prompt: str) -> str:
 
 def analyze_script(client, model: str, script: str) -> str:
     prompt = (
-        "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling. Traga oportunidades de melhoria.\n"
+        "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling.\n"
         + script
     )
     return call_genai(client, model, prompt)
@@ -110,7 +117,7 @@ def analyze_script(client, model: str, script: str) -> str:
 def generate_script(client, model: str, original: str, analysis: str) -> str:
     prompt = (
         "Você é um roteirista de vídeos de youtube, especialista em retenção e storytelling. "
-        "Reescreva o texto, de tal forma que não incorra em plágio ou conteúdo reutilizável, pronto para a narração via tts, " 
+        "Reescreva o texto, de tal forma que não incorra em plágio ou conteúdo reutilizável, pronto para a narração via tts, "
         "sem [] ou divisões, ou marcações, aproximadamente 25 minutos, "
         "(3250 palavras), contendo trechos bíblicos, e uns 3 ditados populares. "
         "Use linguagem próxima do público (não use expressão como galera, palavras difíceis ou em inglês). "
