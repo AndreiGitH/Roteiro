@@ -8,21 +8,17 @@ def main():
     st.set_page_config(page_title="Roteiro YouTube AI", layout="wide")
     st.title("Gerador de Roteiro de Vídeo para YouTube")
 
-    # Sidebar: Configurações da API e modelo
-    st.sidebar.header("Configurações")
-    api_key = st.sidebar.text_input(
-        "API Key Google GenAI", 
-        type="password",
-        value=st.secrets.get("google_api_key", "")
-    )
+    # API Key (não exposta no frontend)
+    api_key = st.secrets.get("google_api_key", "")
+    client = genai.Client(api_key=api_key)
+
+    # Sidebar: Escolha de modelo
+    st.sidebar.header("Configurações do Modelo")
     default_model = st.secrets.get("default_model", "gemini-2.5-pro-exp-03-25")
     model_name = st.sidebar.text_input(
         "Modelo GenAI",
         value=default_model
     )
-
-    # Inicializa cliente Google GenAI
-    client = genai.Client(api_key=api_key)
 
     # Caixa de texto para roteiro original
     original = st.text_area(
