@@ -4,16 +4,25 @@ from google import genai
 # App Streamlit para gerar roteiros de vídeos no YouTube usando Google Gemini
 
 def main():
+    # Configuração da página
     st.set_page_config(page_title="Roteiro YouTube AI", layout="wide")
     st.title("Gerador de Roteiro de Vídeo para YouTube")
 
-    # Configurar cliente Google GenAI
-    api_key = st.secrets.get("google_api_key", "")
-    client = genai.Client(api_key=api_key)
-
-    # Input para escolher modelo
+    # Sidebar: Configurações da API e modelo
+    st.sidebar.header("Configurações")
+    api_key = st.sidebar.text_input(
+        "API Key Google GenAI", 
+        type="password",
+        value=st.secrets.get("google_api_key", "")
+    )
     default_model = st.secrets.get("default_model", "gemini-2.5-pro-exp-03-25")
-    model_name = st.text_input("Modelo GenAI:", value=default_model)
+    model_name = st.sidebar.text_input(
+        "Modelo GenAI",
+        value=default_model
+    )
+
+    # Inicializa cliente Google GenAI
+    client = genai.Client(api_key=api_key)
 
     # Caixa de texto para roteiro original
     original = st.text_area(
@@ -41,7 +50,12 @@ def main():
     if st.session_state.get("analysis"):
         if st.button("Gerar novo roteiro", key="btn_generate_script"):
             with st.spinner("Gerando novo roteiro..."):
-                new_script = generate_script(client, model_name, original, st.session_state.analysis)
+                new_script = generate_script(
+                    client,
+                    model_name,
+                    original,
+                    st.session_state.analysis
+                )
                 st.session_state.new_script = new_script
                 st.text_area(
                     "Roteiro reescrito (aprox. 25 min):",
@@ -60,7 +74,11 @@ def main():
     if st.session_state.get("new_script"):
         if st.button("Gerar títulos e descrição", key="btn_titles"):
             with st.spinner("Gerando títulos e descrição..."):
-                titles_desc = generate_titles_and_description(client, model_name, st.session_state.new_script)
+                titles_desc = generate_titles_and_description(
+                    client,
+                    model_name,
+                    st.session_state.new_script
+                )
                 st.session_state.titles_desc = titles_desc
                 st.text_area(
                     "Sugestões de títulos e descrição de vídeo:",
@@ -99,9 +117,9 @@ def generate_script(client, model: str, original: str, analysis: str) -> str:
         "Reescreva o texto, pronto para a narração via tts, sem [] ou divisões, ou marcações, aproximadamente 25 minutos, "
         "(3250 palavras), de tal forma que não incorra em plágio, contendo trechos bíblicos, e uns 3 ditados populares. "
         "Use linguagem próxima do público (não use expressão como galera, palavras difíceis ou em inglês). "
-        "Abra ganchos narrativos. Não seja prolixo. Atenção: o gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras.\n"
+        "Abra ganchos narrativos. Não seja prolixo. O gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras.\n"
         "Mantenha os pontos fortes e faça as melhorias sugeridas de acordo com o texto e análise a seguir. "
-        "Ao final dê uma nota de comparação entre os dois textos quanto a configuração de conteúdo reutilizável ou plágio.\n\n"
+        "Ao final dê uma nota de comparação entre os dois textos para configuração de conteúdo reutilizável.\n\n"
         "Roteiro original:\n" + original + "\n\n"
         "Análise:\n" + analysis
     )
