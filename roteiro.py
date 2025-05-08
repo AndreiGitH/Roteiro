@@ -62,7 +62,7 @@ def main():
             st.session_state.new_script,
             height=400,
             key="script_box",
-            disabled=True
+            disabled=False
         )
         st.download_button(
             label="Baixar roteiro (.txt)",
@@ -87,7 +87,7 @@ def main():
             st.session_state.titles_desc,
             height=300,
             key="titles_box",
-            disabled=True
+            disabled=False
         )
         st.download_button(
             label="Baixar títulos e descrição (.txt)",
