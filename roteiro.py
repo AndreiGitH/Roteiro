@@ -108,7 +108,7 @@ def call_genai(client, model: str, prompt: str) -> str:
 
 def analyze_script(client, model: str, script: str) -> str:
     prompt = (
-        "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling.\n"
+        "Analise este roteiro considerando o gancho inicial, retenção, engajamento e storytelling. Traga sugestões de melhoria de forma detacada.\n"
         + script
     )
     return call_genai(client, model, prompt)
@@ -137,7 +137,8 @@ def generate_titles_and_description(client, model: str, script: str) -> str:
         "a fim de aumentar os cliques sem se afastar do conteúdo do vídeo. "
         "Ao final traga a descrição do vídeo de youtube com 1000 caracteres, hashtags e tags entre vírgulas, atentando para SEO, "
         "e sugestão de prompt em português e em inglês para a criação de imagem da thumb, "
-        "considerando 3 elementos visuais principais na thumb, rosto visível com expressão forte, localizado à direita da imagem, com visual chamativo e que desperte a curiosidade, sem texto overlay.\n\n"
+        "considerando 3 elementos visuais principais na thumb (Um rosto, uma cena e algo que chame a atenção e interaja emocionalmente com o personagem), "
+        "rosto visível com expressão forte, localizado à direita da imagem, com visual chamativo e que desperte a curiosidade, sem texto overlay.\n\n"
         + script
     )
     return call_genai(client, model, prompt)
