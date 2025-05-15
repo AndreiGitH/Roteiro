@@ -123,7 +123,7 @@ def generate_script(client, model: str, original: str, analysis: str) -> str:
         "Use linguagem acessível e sem abreviaturas (não use expressão como galera, palavras difíceis ou em inglês). "
         "Abra ganchos narrativos entre as partes. Não seja prolixo. Atenção: o gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras.\n"
         "Mantenha os pontos fortes e faça as melhorias sugeridas de acordo com o texto e análise a seguir. "
-        "Ao final dê uma nota de comparação entre os dois textos quanto a configuração de conteúdo reutilizável ou plágio.\n\n"
+        "Ao final dê uma nota de comparação entre os dois textos e opini quanto a configuração de conteúdo reutilizável ou plágio.\n\n"
         "Roteiro original:\n" + original + "\n\n"
         "Análise:\n" + analysis
     )
@@ -134,8 +134,8 @@ def generate_titles_and_description(client, model: str, script: str) -> str:
     prompt = (
         "Crie sugestões de título para vídeo de youtube com no máximo 60 caracteres. "
         "Os títulos devem despertar curiosidade, benefício e urgência e atender às melhores práticas de títulos chamativos e bem sucedidos de youtube, "
-        "a fim de aumentar os cliques sem se afastar do conteúdo do vídeo. "
-        "Ao final traga a descrição do vídeo de youtube com 1000 caracteres, hashtags e tags entre vírgulas, atentando para SEO, "
+        "a fim de aumentar os cliques sem se afastar do conteúdo do vídeo. Faça um ranking entre eles."
+        "Ao final traga a descrição do vídeo de youtube com 1800 caracteres, hashtags e tags entre vírgulas, atentando para SEO, "
         "e sugestão de prompt em português e em inglês para a criação de imagem da thumb, "
         "considerando 3 elementos visuais principais na thumb (Um rosto, uma cena e algo que chame a atenção e interaja emocionalmente com o personagem), "
         "rosto visível com expressão forte, localizado à direita da imagem, com visual chamativo e que desperte a curiosidade, sem texto overlay.\n\n"
