@@ -14,7 +14,7 @@ def main():
 
     # Sidebar: Escolha de modelo
     st.sidebar.header("Configurações do Modelo")
-    default_model = st.secrets.get("default_model", "gemini-2.5-pro-exp-03-25")
+    default_model = st.secrets.get("default_model", "gemini-2.5-flash-preview-04-17")
     model_name = st.sidebar.text_input(
         "Modelo GenAI",
         value=default_model
