@@ -93,7 +93,7 @@ def main():
                         + "    *   **Exemplo de Variação:** \"[Comece com uma imagem mental forte: 'Imagine [personagem bíblico/situação] enfrentando [desafio relacionado ao tema]... Essa luta antiga ecoa em nossos corações hoje quando lidamos com [aspecto moderno do tema]...']\"\n\n"
                         + "2.  **Conexão Imediata:** Relacione o gancho diretamente às dores, dúvidas, anseios ou curiosidades do público sobre o [TEMA BÍBLICO ESPECÍFICO].\n\n"
                         + "3.  **Promessa de Valor Clara:**\n"
-                        + "    *   Declare explicitamente o que o espectador vai aprender ou descobrir (ex: \"Nos próximos minutos, você vai descobrir [NÚMERO] chaves/sinais/princípios sobre [TEMA BÍBLICO ESPECÍFICO]\"...)"
+                        + "    *   Declare explicitamente o que o espectador vai aprender ou descobrir (ex: \"Nos próximos minutos, você vai descobrir [NÚMERO] chaves/sinais/principiais sobre [TEMA BÍBLICO ESPECÍFICO]\"...)"
                         # Truncated: manter conforme roteirotema.py
                     )
                     roteiro_inicial = call_genai(client, model_name, prompt_script)
@@ -121,9 +121,23 @@ def main():
     if st.session_state.get("revised"):
         st.subheader("Roteiro Final")
         st.text_area("", st.session_state.revised, height=300)
+        # Botão de download para o roteiro final
+        st.download_button(
+            label="📥 Baixar Roteiro Final",
+            data=st.session_state.revised,
+            file_name="roteiro_final.txt",
+            mime="text/plain"
+        )
     if st.session_state.get("meta"):
         st.subheader("Títulos, Descrição e Prompt de Thumbnail")
         st.text_area("", st.session_state.meta, height=300)
+        # Botão de download para metadados
+        st.download_button(
+            label="📥 Baixar Metadados (Título, Descrição e Prompt)",
+            data=st.session_state.meta,
+            file_name="metadados.txt",
+            mime="text/plain"
+        )
 
 
 if __name__ == "__main__":
