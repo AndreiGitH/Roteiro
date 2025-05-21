@@ -30,8 +30,8 @@ def generate_script(client, model: str, original: str, analysis: str, num_palavr
     """Reescreve o roteiro original com base na análise, usando o número de palavras especificado."""
     prompt = (
         f"Você é um roteirista de vídeos de youtube, especialista em retenção e storytelling. "
-        f"Reescreva o texto, de tal forma que não incorra em plágio ou conteúdo reutilizável, pronto para a narração via tts (nas pausas maiores ou entre as partes use ...), "
-        f"sem [] ou divisões, ou marcações, com aproximadamente {num_palavras} palavras, contendo trechos bíblicos, e uns 3 ditados populares. "
+        f"Reescreva o texto, com aproximadamente {num_palavras} palavras, de tal forma que não incorra em plágio ou conteúdo reutilizável, pronto para a narração via tts (nas pausas maiores ou entre as partes use ...), "
+        f"sem [] ou divisões, ou marcações, contendo trechos bíblicos, e uns 3 ditados populares. "
         "Use linguagem acessível e sem abreviaturas (não use expressão como galera, palavras difíceis ou em inglês). Abra ganchos narrativos entre as partes. Não seja prolixo. "
         "Atenção: o gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras.\n"
         "Mantenha os pontos fortes e faça as melhorias sugeridas de acordo com o texto e análise a seguir. Ao final dê uma nota de comparação entre os dois textos e opinião quanto a configuração de conteúdo reutilizável ou plágio.\n\n"
@@ -93,7 +93,7 @@ def main():
                         + "    *   **Exemplo de Variação:** \"[Comece com uma imagem mental forte: 'Imagine [personagem bíblico/situação] enfrentando [desafio relacionado ao tema]... Essa luta antiga ecoa em nossos corações hoje quando lidamos com [aspecto moderno do tema]...']\"\n\n"
                         + "2.  **Conexão Imediata:** Relacione o gancho diretamente às dores, dúvidas, anseios ou curiosidades do público sobre o [TEMA BÍBLICO ESPECÍFICO].\n\n"
                         + "3.  **Promessa de Valor Clara:**\n"
-                        + "    *   Declare explicitamente o que o espectador vai aprender ou descobrir (ex: \"Nos próximos minutos, você vai descobrir [NÚMERO] chaves/sinais/principiais sobre [TEMA BÍBLICO ESPECÍFICO]\"...)"
+                        + "    *   Declare explicitamente o que o espectador vai aprender ou descobrir (ex: \"Nos próximos minutos, você vai descobrir [NÚMERO] chaves/sinais/principais sobre [TEMA BÍBLICO ESPECÍFICO]\"...)"
                         # Truncated: manter conforme roteirotema.py
                     )
                     roteiro_inicial = call_genai(client, model_name, prompt_script)
@@ -111,7 +111,6 @@ def main():
 
                 # 4. Gerar títulos, descrição e prompt de thumb (usando apenas as 2000 primeiras palavras)
                 with st.spinner("Gerando títulos, descrição e prompt de thumbnail..."):
-                    # Trunca o roteiro final para as primeiras 2000 palavras
                     palavras = st.session_state.revised.split()
                     roteiro_truncado = " ".join(palavras[:2000])
                     meta = generate_titles_and_description(client, model_name, roteiro_truncado)
@@ -119,20 +118,19 @@ def main():
 
                 # 5. Reescrever gancho inicial
                 with st.spinner("Gerando gancho inicial revisado..."):
-                    # Trunca o roteiro final para as primeiras 250 palavras
-                    palavras = st.session_state.revised.split()
-                    trecho_gancho = " ".join(palavras[:250])
+                    palavras_g = st.session_state.revised.split()
+                    trecho_gancho = " ".join(palavras_g[:250])
                     prompt_gancho = (
                         "Você é especialista em criação de gancho inicial para vídeos, que desperta curiosidade e retenção, "
-                        "melhore este gancho e introdução inicial que deverá ter apenas 90 palavras.
-
-" + trecho_gancho
+                        "melhore este gancho e introdução inicial que deverá ter apenas 90 palavras.\n\n" + trecho_gancho
                     )
                     gancho_revisado = call_genai(client, model_name, prompt_gancho)
                     st.session_state.gancho = gancho_revisado
 
+            except RuntimeError as e:
+                st.error(f"Ocorreu um erro durante o pipeline: {e}")
+
     # Exibir resultado final
-    # 6\. Exibir gancho inicial revisado
     if st.session_state.get("gancho"):
         st.subheader("Gancho Inicial Revisado")
         st.text_area("", st.session_state.gancho, height=100)
@@ -145,7 +143,6 @@ def main():
     if st.session_state.get("revised"):
         st.subheader("Roteiro Final")
         st.text_area("", st.session_state.revised, height=300)
-        # Botão de download para o roteiro final
         st.download_button(
             label="📥 Baixar Roteiro Final",
             data=st.session_state.revised,
@@ -155,7 +152,6 @@ def main():
     if st.session_state.get("meta"):
         st.subheader("Títulos, Descrição e Prompt de Thumbnail")
         st.text_area("", st.session_state.meta, height=300)
-        # Botão de download para metadados
         st.download_button(
             label="📥 Baixar Metadados (Título, Descrição e Prompt)",
             data=st.session_state.meta,
