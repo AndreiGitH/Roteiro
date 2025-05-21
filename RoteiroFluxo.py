@@ -109,9 +109,12 @@ def main():
                     roteiro_final = generate_script(client, model_name, roteiro_inicial, analysis, num_palavras)
                     st.session_state.revised = roteiro_final
 
-                # 4. Gerar títulos, descrição e prompt de thumb
+                # 4. Gerar títulos, descrição e prompt de thumb (usando apenas as 2000 primeiras palavras)
                 with st.spinner("Gerando títulos, descrição e prompt de thumbnail..."):
-                    meta = generate_titles_and_description(client, model_name, roteiro_final)
+                    # Trunca o roteiro final para as primeiras 2000 palavras
+                    palavras = st.session_state.revised.split()
+                    roteiro_truncado = " ".join(palavras[:2000])
+                    meta = generate_titles_and_description(client, model_name, roteiro_truncado)
                     st.session_state.meta = meta
 
             except RuntimeError as e:
