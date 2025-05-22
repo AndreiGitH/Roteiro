@@ -30,10 +30,10 @@ def generate_script(client, model: str, original: str, analysis: str, num_palavr
     """Reescreve o roteiro original com base na análise, usando o número de palavras especificado."""
     prompt = (
         f"Você é um roteirista de vídeos de youtube, especialista em retenção e storytelling. "
-        f"Reescreva o texto, com aproximadamente {num_palavras} palavras, de tal forma que não incorra em plágio ou conteúdo reutilizável, pronto para a narração via tts (nas pausas maiores ou entre as partes use ...), "
+        f"Reescreva o texto, com {num_palavras} palavras, de tal forma que não incorra em plágio ou conteúdo reutilizável, pronto para a narração via tts (nas pausas maiores ou entre as partes use ...), "
         f"sem [] ou divisões, ou marcações, contendo trechos bíblicos, e uns 3 ditados populares. "
-        "Use linguagem acessível e sem abreviaturas (não use expressão como galera, palavras difíceis ou em inglês). Abra ganchos narrativos entre as partes. Não seja prolixo. "
-        f"Atenção: o gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras, e o texto total deverá ter aproximadamente {num_palavras} palavras.\n"
+        "Use linguagem acessível e sem abreviaturas (não use expressão como galera, palavras difíceis ou em inglês). Abra ganchos narrativos entre as partes. Não seja prolixo ou repetitivo. "
+        f"Atenção: o gancho inicial com introdução deve ter no máximo 25 segundos ou 55 palavras, e o texto total deverá ter {num_palavras} palavras.\n"
         "Mantenha os pontos fortes e faça as melhorias sugeridas de acordo com o texto e análise a seguir.\n\n"
         "Roteiro original:\n" + original + "\n\n"
         "Análise:\n" + analysis
