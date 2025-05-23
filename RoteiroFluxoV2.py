@@ -1,9 +1,3 @@
-Ok, farei as adaptações para utilizar a configuração de modelo e inicialização do cliente GenAI exatamente como você especificou no trecho fornecido.
-
-Isso significa que voltaremos a usar st.sidebar.text_input para o nome do modelo e genai.Client(api_key=api_key) para a inicialização do cliente. A função call_genai será ajustada para refletir a chamada client.models.generate_content(...) que estava no seu código original.
-
-Aqui está o código atualizado:
-
 import streamlit as st
 from google import genai # Usando o import original
 import google.genai.errors as genai_errors # Usando o import original
@@ -297,26 +291,3 @@ if __name__ == "__main__":
     main()
 
 
-Principais alterações de acordo com sua solicitação:
-
-Configuração do Modelo na Sidebar:
-
-O default_model agora usa "gemini-1.5-flash-latest" como um padrão mais comum, mas você pode alterá-lo de volta para "gemini-2.5-flash-preview-04-17" se esse modelo específico funcionar com sua configuração genai.Client. O importante é que o nome do modelo inserido no st.sidebar.text_input seja compatível com a API que genai.Client().models.generate_content(model=model_name, ...) espera.
-
-model_name é obtido via st.sidebar.text_input.
-
-Inicialização do Cliente GenAI:
-
-A API Key é lida dos secrets.
-
-O cliente é inicializado com client = genai.Client(api_key=api_key).
-
-Nota Importante: Esta forma de inicialização e a subsequente chamada client.models.generate_content() são características de bibliotecas como google-ai-generativelanguage ou versões mais antigas da SDK do Google GenAI. Se você estiver usando a biblioteca google-generativeai (versão 0.3.0 ou mais recente), a maneira canônica de configurar e chamar a API é diferente (genai.configure(api_key=...) e model = genai.GenerativeModel(model_name)). Certifique-se de que a biblioteca google-api-python-client ou a versão correta da SDK do GenAI que suporta genai.Client(api_key=...) e client.models.generate_content() esteja instalada em seu ambiente.
-
-Função call_genai:
-
-A chamada principal agora é response = client.models.generate_content(model=model, contents=prompt).
-
-Adicionei um pequeno fallback para tentar ler response.candidates[0].content.parts[0].text se response.text não estiver disponível, pois esta é uma estrutura de resposta comum para modelos Gemini mais recentes. Se ambas falharem, um erro mais detalhado será levantado.
-
-O restante da lógica do aplicativo (geração de prompts, fluxo de botões, abas de resultados) permanece o mesmo da versão anterior. Certifique-se de que seu ambiente Python tenha a biblioteca Google GenAI correta instalada que corresponda a essa forma de uso da API.
