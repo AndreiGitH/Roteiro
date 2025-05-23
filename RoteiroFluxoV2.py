@@ -150,7 +150,7 @@ def main():
     # Nota: "gemini-2.5-flash-preview-04-17" pode ser um nome de modelo específico ou de uma API mais antiga.
     # Para a API Gemini mais recente (google-generativeai), os nomes são como "models/gemini-1.5-flash-latest".
     # Certifique-se de que este nome de modelo é compatível com a forma como genai.Client() e client.models.generate_content() são usados.
-    default_model = st.secrets.get("default_model", "gemini-1.5-flash-latest") # Alterado para um modelo mais comum, mas mantenha o seu se funcionar
+    default_model = st.secrets.get("default_model", "gemini-2.5-flash-preview-04-17") # Alterado para um modelo mais comum, mas mantenha o seu se funcionar
     model_name = st.sidebar.text_input("Modelo GenAI", value=default_model, help="Ex: gemini-1.5-flash-latest, gemini-1.5-pro-latest. Alguns modelos mais antigos podem não usar o prefixo 'models/'.")
 
     # Inicializa cliente GenAI (CONFORME SOLICITADO)
