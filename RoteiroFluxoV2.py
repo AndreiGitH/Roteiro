@@ -100,21 +100,156 @@ O resultado final deve ser apenas o texto do roteiro, pronto para ser narrado.
 
 def revise_script(client, model: str, original_script: str, num_palavras: int) -> str:
     """Revisa o roteiro inicial com base em sugestões de melhoria."""
-    prompt = (
-        f"Analise o roteiro inicial a seguir. Seu objetivo é identificar pontos onde ele pode ser menos prolixo, menos chato, mais dinâmico e mais direto ao ponto. "
-        f"Após a análise, reescreva o texto incorporando essas sugestões de melhoria. "
-        f"O novo roteiro deve ter aproximadamente {num_palavras} palavras. "
-        f"Mantenha o foco em retenção e storytelling para vídeos do YouTube. "
-        f"O texto reescrito deve estar pronto para narração via TTS (use '...' para pausas maiores ou entre partes), "
-        f"sem marcadores como '[]', divisões explícitas ou anotações. "
-        f"Deve conter trechos bíblicos relevantes e cerca de 3 ditados populares brasileiros, integrados naturalmente. "
-        f"Use linguagem acessível, sem abreviaturas, gírias (como 'galera'), palavras difíceis ou termos em inglês desnecessários. "
-        f"Abra ganchos narrativos sutis entre as partes. Não seja prolixo ou repetitivo. "
-        f"O gancho inicial com introdução deve ter no máximo 95 palavras. "
-        f"O texto total deverá ter aproximadamente {num_palavras} palavras. "
+    prompt = f"""
+    Você é um especialista em criação de conteúdo viral para YouTube, especializado em narrativas bíblicas. Sua missão é pegar o roteiro fornecido e transformá-lo em uma obra-prima de engajamento que domina o algoritmo e maximiza retenção.
+
+🎯 SUA MISSÃO
+Reescreva completamente o roteiro fornecido aplicando a estrutura de 15 minutos otimizada, mantendo 100% da fidelidade bíblica mas transformando-o em conteúdo impossível de parar de assistir.
+
+📋 ESTRUTURA OBRIGATÓRIA PARA APLICAR
+🔥 SEÇÃO 1: HOOK DEVASTADOR (0-20s)
+O QUE FAZER:
+Crie uma abertura nos primeiros 5 segundos que seja impossível de ignorar
+Use uma frase de impacto máximo relacionada ao clímax da história
+Nos segundos 5-15: contextualize rapidamente + faça uma promessa irresistível
+Segundos 15-20: dê um preview visual do momento mais dramático
+FRASE MODELO: "Em [X situação extrema], [personagem bíblico] tomou uma decisão que [consequência chocante]... e o que você vai descobrir nos próximos 15 minutos vai mudar completamente sua perspectiva sobre [tema central]."
+[INDICAÇÃO VISUAL]: Montagem rápida dos 3 momentos mais impactantes do vídeo
+
+🎭 SEÇÃO 2: ESTABELECIMENTO + PRIMEIRA REVELAÇÃO (20s-2min)
+O QUE FAZER:
+20-45s: Forneça contexto bíblico essencial de forma dinâmica
+45s-1:30min: Revele uma primeira informação surpreendente que poucos conhecem
+1:30-2min: Crie um gancho que força o espectador a continuar
+ELEMENTOS OBRIGATÓRIOS:
+Uma pergunta direta ao público que os faça pensar
+Uma "curiosity gap" que só será fechada mais tarde
+Conexão com algo que o espectador já viveu
+
+⚡ SEÇÃO 3: DESENVOLVIMENTO DO CONFLITO (2-5min)
+O QUE FAZER:
+2-3min: Aprofunde o drama humano por trás da história bíblica
+3-4min: Primeira aplicação pessoal forte ("Se você já se sentiu...")
+4-5min: Construa tensão crescente + teaser do que vem
+ELEMENTOS OBRIGATÓRIOS:
+Pelo menos 2 ganchos de retenção ("Mas isso não é nada comparado ao que...")
+Uma pergunta que faça as pessoas pausarem para comentar
+Conexão emocional que faça o espectador se identificar
+
+💥 SEÇÃO 4: PRIMEIRA GRANDE REVELAÇÃO (5-8min)
+O QUE FAZER:
+5-6min: Entregue o primeiro clímax emocional da história
+6-7min: Explore as consequências e extraia lições profundas
+7-8min: Faça transição suave + lance novo gancho irresistível
+ELEMENTOS OBRIGATÓRIOS:
+Um momento "uau" que justifique ter assistido até aqui
+Aplicação prática que mude a perspectiva do espectador
+Pattern interrupt que quebre expectativas
+
+🔄 SEÇÃO 5: SEGUNDO ARCO NARRATIVO (8-11min)
+O QUE FAZER:
+8-9min: Introduza nova perspectiva ou personagem secundário
+9-10min: Desenvolva conexão paralela com a história principal
+10-11min: Una todos os fios narrativos de forma surpreendente
+ELEMENTOS OBRIGATÓRIOS:
+Revelação que recontextualiza tudo que foi dito antes
+Pelo menos uma pergunta que gere debate nos comentários
+Momento de identificação pessoal ("Quantos de nós...")
+
+🎆 SEÇÃO 6: CLÍMAX PRINCIPAL (11-13min)
+O QUE FAZER:
+11-12min: Entregue o momento de maior tensão/emoção de toda a história
+12-13min: Resolva de forma épica + revele a lição transformadora final
+ELEMENTOS OBRIGATÓRIOS:
+O payoff de todas as "curiosity gaps" abertas
+Momento emocional que pode gerar lágrimas
+Revelação que conecta tudo de forma genial
+
+🎯 SEÇÃO 7: RESOLUÇÃO + APLICAÇÃO (13-15min)
+O QUE FAZER:
+13-14min: Aplicação prática e moderna da lição bíblica
+14-14:45min: Call-to-action principal (like, comentário, inscrição)
+14:45-15min: Teaser irresistível do próximo vídeo
+ELEMENTOS OBRIGATÓRIOS:
+Pergunta final que force interação nos comentários
+Desafio prático que o espectador pode aplicar hoje
+Gancho para o próximo vídeo que crie expectativa
+
+⚡ GANCHOS DE RETENÇÃO OBRIGATÓRIOS
+Distribua estas frases (ou similares) ao longo do roteiro:
+Minuto 1: "Mas o que você vai descobrir vai chocar você..."
+Minuto 3: "Você não vai acreditar no que aconteceu depois..."
+Minuto 5: "E foi aí que a verdade devastadora veio à tona..."
+Minuto 7: "Mas espere, porque tem muito mais..."
+Minuto 9: "Isso vai mudar completamente sua perspectiva sobre..."
+Minuto 11: "Aqui está o momento que mudou tudo..."
+Minuto 13: "E a lição que vai transformar sua vida é..."
+
+🎭 TÉCNICAS OBRIGATÓRIAS PARA APLICAR
+CURIOSITY GAPS (Lacunas de Curiosidade)
+Crie pelo menos 5 momentos onde você:
+Menciona algo intrigante
+Diz "vou explicar isso em alguns minutos"
+Só resolve a curiosidade mais tarde
+PATTERN INTERRUPTS (Quebra de Padrão)
+Mude o tom de voz drasticamente 3-4 vezes
+Use perguntas diretas inesperadas
+Revele informações que contrariam expectativas
+SOCIAL PROOF (Prova Social)
+"Milhares de pessoas já me perguntaram sobre isso..."
+"Nos comentários do último vídео, vocês disseram..."
+"Se você é como a maioria das pessoas..."
+APLICAÇÃO PESSOAL CONSTANTE
+A cada 2-3 minutos, conecte com a vida real:
+"Se você já passou por isso..."
+"Quantas vezes você se sentiu assim..."
+"Essa situação te lembra alguma coisa?"
+
+📊 ELEMENTOS DE ENGAJAMENTO OBRIGATÓRIOS
+PERGUNTAS ESTRATÉGICAS (Mínimo 8)
+Distribua perguntas que:
+Façam as pessoas pausarem para pensar
+Gerem debate nos comentários
+Criem identificação pessoal
+CALL-TO-ACTIONS INTEGRADOS (Mínimo 4)
+Minuto 7: "Me conta nos comentários se..."
+Minuto 10: "Deixa um like se você concorda que..."
+Minuto 12: "Compartilha se isso tocou seu coração..."
+Minuto 14: "Inscreve-se e ativa o sininho porque..."
+MOMENTOS DE PAUSA (Mínimo 3)
+Crie momentos onde é natural pausar:
+Para refletir sobre uma revelação
+Para processar uma emoção intensa
+Para comentar uma aplicação pessoal
+
+✅ CHECKLIST FINAL PARA VALIDAÇÃO
+Antes de entregar, verifique se o roteiro tem:
+ESTRUTURA:
+[ ] Hook devastador nos primeiros 10 segundos
+[ ] 7 ganchos de retenção distribuídos nos minutos certos
+[ ] 3 grandes arcos narrativos conectados
+[ ] Pausas naturais nos minutos 3, 6, 9 e 12 para ads
+ENGAJAMENTO:
+[ ] 8+ perguntas que geram comentários
+[ ] 5+ curiosity gaps bem construídos
+[ ] 4+ call-to-actions integrados naturalmente
+[ ] 3+ momentos de aplicação pessoal forte
+RETENÇÃO:
+[ ] Preview do clímax logo no início
+[ ] Teasers constantes do que vem
+[ ] Pattern interrupts bem distribuídos
+[ ] Final que recompensa toda a jornada
+TÉCNICO:
+[ ] Variação de ritmo claro
+[ ] Transições suaves
+[ ] Fidelidade bíblica 100% mantida
+
+🎯 PROMPT DE EXECUÇÃO
+"Agora pegue o roteiro fornecido e reescreva-o completamente seguindo esta estrutura. Mantenha a essência e verdade bíblica, mas transforme-o em um vídeo viral que domina o algoritmo do YouTube. Inclua todas as indicações visuais, ganchos de retenção e técnicas de engajamento. Faça cada minuto valer a permanência do espectador."
+"""
         "Roteiro original a ser analisado e reescrito:\n"
         f"{original_script}"
-    )
+
     return call_genai(client, model, prompt)
 
 def generate_titles_and_description(client, model: str, script: str) -> str:
