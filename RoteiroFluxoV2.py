@@ -101,8 +101,7 @@ O resultado final deve ser apenas o texto do roteiro, pronto para ser narrado.
 def revise_script(client, model: str, original_script: str, num_palavras: int) -> str:
     """Revisa o roteiro inicial com base em sugestões de melhoria."""
     prompt = f"""
-    Você é um especialista em criação de conteúdo viral para YouTube, especializado em narrativas bíblicas. Sua missão é pegar o roteiro fornecido e transformá-lo em uma obra-prima de engajamento que domina o algoritmo e maximiza retenção.
-
+Você é um especialista em criação de conteúdo viral para YouTube, especializado em narrativas bíblicas. Sua missão é pegar o roteiro fornecido e transformá-lo em uma obra-prima de engajamento que domina o algoritmo e maximiza retenção.
 🎯 SUA MISSÃO
 Reescreva completamente o roteiro fornecido aplicando a estrutura de 15 minutos otimizada, mantendo 100% da fidelidade bíblica mas transformando-o em conteúdo impossível de parar de assistir.
 
