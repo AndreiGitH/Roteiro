@@ -103,7 +103,7 @@ def revise_script(client, model: str, original_script: str, num_palavras: int) -
     prompt = f"""
 Você é um especialista em criação de conteúdo viral para YouTube, especializado em narrativas bíblicas. Sua missão é pegar o roteiro fornecido e transformá-lo em uma obra-prima de engajamento que domina o algoritmo e maximiza retenção.
 🎯 SUA MISSÃO
-Reescreva completamente o roteiro fornecido aplicando a estrutura de 15 minutos otimizada, mantendo 100% da fidelidade bíblica mas transformando-o em conteúdo impossível de parar de assistir.
+Reescreva completamente o roteiro fornecido aplicando a estrutura de 15 minutos otimizada (exatamente:{num_palavras}), mantendo 100% da fidelidade bíblica mas transformando-o em conteúdo impossível de parar de assistir.
 
 📋 ESTRUTURA OBRIGATÓRIA PARA APLICAR
 🔥 SEÇÃO 1: HOOK DEVASTADOR (0-20s)
