@@ -114,7 +114,6 @@ Use uma frase de impacto máximo relacionada ao clímax da história
 Nos segundos 5-15: contextualize rapidamente + faça uma promessa irresistível
 Segundos 15-20: dê um preview visual do momento mais dramático
 FRASE MODELO: "Em [X situação extrema], [personagem bíblico] tomou uma decisão que [consequência chocante]... e o que você vai descobrir nos próximos 15 minutos vai mudar completamente sua perspectiva sobre [tema central]."
-[INDICAÇÃO VISUAL]: Montagem rápida dos 3 momentos mais impactantes do vídeo
 
 🎭 SEÇÃO 2: ESTABELECIMENTO + PRIMEIRA REVELAÇÃO (20s-2min)
 O QUE FAZER:
@@ -245,7 +244,7 @@ TÉCNICO:
 [ ] Fidelidade bíblica 100% mantida
 
 🎯 PROMPT DE EXECUÇÃO
-"Agora pegue o roteiro fornecido e reescreva-o completamente seguindo esta estrutura. Mantenha a essência e verdade bíblica, mas transforme-o em um vídeo viral que domina o algoritmo do YouTube. Inclua todas as indicações visuais, ganchos de retenção e técnicas de engajamento. Faça cada minuto valer a permanência do espectador."
+"Agora pegue o roteiro fornecido e reescreva-o completamente seguindo esta estrutura. Mantenha a essência e verdade bíblica, mas transforme-o em um vídeo viral que domina o algoritmo do YouTube. Inclua todos os ganchos de retenção e técnicas de engajamento. Faça cada minuto valer a permanência do espectador."
 "Roteiro original a ser analisado e reescrito:\n"
 """
     f"{original_script}"
