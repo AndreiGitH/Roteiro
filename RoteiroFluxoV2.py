@@ -247,8 +247,8 @@ TÉCNICO:
 🎯 PROMPT DE EXECUÇÃO
 "Agora pegue o roteiro fornecido e reescreva-o completamente seguindo esta estrutura. Mantenha a essência e verdade bíblica, mas transforme-o em um vídeo viral que domina o algoritmo do YouTube. Inclua todas as indicações visuais, ganchos de retenção e técnicas de engajamento. Faça cada minuto valer a permanência do espectador."
 """
-        "Roteiro original a ser analisado e reescrito:\n"
-        f"{original_script}"
+"Roteiro original a ser analisado e reescrito:\n"
+f"{original_script}"
 
     return call_genai(client, model, prompt)
 
