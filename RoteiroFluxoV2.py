@@ -246,7 +246,7 @@ TÉCNICO:
 🎯 PROMPT DE EXECUÇÃO
 "Agora pegue o roteiro fornecido e reescreva-o completamente seguindo esta estrutura. O texto deve estar pronto para a narração, sem marcações ou indicações que não serão narrados. Mantenha a essência e verdade bíblica, mas transforme-o em um vídeo viral que domina o algoritmo do YouTube. Inclua todos os ganchos de retenção e técnicas de engajamento. Faça cada minuto valer a permanência do espectador."
 "Roteiro original a ser analisado e reescrito:\n"
-{original_script}
++ {original_script}
 """
     return call_genai(client, model, prompt)
 
